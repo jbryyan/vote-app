@@ -1,0 +1,23 @@
+.vote-results-chart{
+  height: calc(65vh);
+}
+
+@media (max-width: 770px) {
+  .vote-results-chart {
+    height: calc(65vh - 80px);
+  
+  }
+}
+
+@media (max-width: 568px) {
+  .vote-results-chart {
+    height: calc(65vh - 130px);
+   
+  }
+}
+
+.chart-container {
+  position: relative; 
+  height:10%; 
+  width:80vw;
+}

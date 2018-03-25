@@ -1,0 +1,17 @@
+export const ADD_PIN = 'add_pin';
+export const FETCH_POLLS = 'fetch_polls';
+export const FETCH_PIN = 'fetch_pin';
+export const FETCH_MY_POLLS = 'fetch_my_polls';
+export const AUTH_USER = 'auth_user';
+export const LOGIN_USER = 'login_user';
+export const REGISTER_USER = 'register_user';
+export const REG_SUCCESS = 'reg_success';
+export const LOGOUT_USER = 'logout_user';
+export const SAVE_PIN = 'save_pin';
+export const DELETE_PIN = 'delete_pin';
+export const LOADING_PIN = 'loading_pin';
+export const LOADING_USER = 'loading_user';
+export const LOAD_MYSORTED_POLLS = 'load_mysorted_polls'; 
+export const LOAD_POLLS = 'load_polls';
+export const IS_LOADING = 'is_loading';
+export const ROOT_URL = 'http://192.168.223.128:9000';
