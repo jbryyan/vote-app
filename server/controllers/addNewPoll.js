@@ -35,11 +35,12 @@ module.exports = function(req, res){
 
   
   const data = {
-    id: mongoose.Types.ObjectId(),
-    totalVotes: 0, text: pollData.question,
-    options: [ ],
-    madeBy: username, date: `${month}/${day}/${year}`,
-    voters: []
+    totalVotes: 0, 
+    text: pollData.question,
+    options: [],
+    madeBy: username, 
+    date: `${month}/${day}/${year}`,
+    //voters: []
   };
   
   Object.keys(pollData).forEach(key => {
@@ -52,6 +53,13 @@ module.exports = function(req, res){
     }
   });
 
+  let newPoll = new Poll(data);
+  newPoll.save(function (err) {
+    if (err) console.log(err);
+  });
+  res.status(200).json({ success: true });
+
+  /*
   Poll.findOneAndUpdate(
     { username: username },
     { $push: { 
@@ -63,4 +71,5 @@ module.exports = function(req, res){
       res.status(200).json({ success: true });
     }
   );
+  */
 };

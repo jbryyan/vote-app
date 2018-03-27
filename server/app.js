@@ -14,6 +14,7 @@ const addNewPoll = require('./controllers/addNewPoll');
 const fetchMyPolls = require('./controllers/fetchMyPolls');
 const deletePoll = require('./controllers/deletePoll');
 const fetchAllPolls = require('./controllers/fetchAllPolls');
+const voteForPoll = require('./controllers/voteForPoll');
 const expressjwt = require('express-jwt');
 
 // Setup logger
@@ -62,6 +63,9 @@ app.delete('/api/deletePoll', auth, deletePoll);
 
 // Fetch all polls
 app.get('/api/fetchAllPolls', fetchAllPolls);
+
+// Vote for poll
+app.put('/api/voteForPoll', auth, voteForPoll);
 
 // Return error if not authorized
 app.use(function(err, req, res, next){

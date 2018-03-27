@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../styles/logo.svg';
 import '../styles/App.css';
-import { Segment, List, Label, Image, Responsive, Transition } from 'semantic-ui-react';
+import { Segment, List, Label, Image, Responsive, Transition, Icon } from 'semantic-ui-react';
 import '../styles/VoteList.css';
 
 class VoteList extends Component {
@@ -15,7 +15,7 @@ class VoteList extends Component {
 
   // If user is owner of poll, redirect to poll results, else open modal to vote
   listClicked = (data, owner) => {
-      if(owner || this.props.voted ){
+      if(owner || data.voted ){
         this.props.history.push({
           pathname: `/poll/${data.id}`,
           state: { data: data }
@@ -44,12 +44,26 @@ class VoteList extends Component {
             :
             null
           }
-          { this.props.voted &&
-            <Label color='orange' basic>Voted</Label> 
+          { data[key].voted &&
+            <Label color='green' basic>
+              <Icon name='check'/>
+              Voted
+            </Label> 
           }
         </Responsive>
         <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
           <List.Content color='red' circular='true' floated='right'>
+            { this.props.user === data[key].madeBy ?  
+              <Label color='teal' basic>My Poll</Label> 
+              :
+              null
+            }
+            { data[key].voted &&
+              <Label color='green' basic>
+                <Icon name='check'/>
+                Voted
+              </Label> 
+            }
             <Label color='red' circular>{data[key].totalVotes}</Label>
           </List.Content>
         </Responsive>

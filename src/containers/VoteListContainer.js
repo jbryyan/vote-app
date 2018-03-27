@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import VoteList from '../components/VoteList';
 import VoteListForm from '../components/VoteListForm';
 import VoteListModal from '../components/VoteListModal';
-import { fetchAllPolls, sortMyPolls } from '../actions/index';
+import { fetchAllPolls, sortMyPolls, voteForPoll } from '../actions/index';
 
 import '../styles/VoteListContainer.css';
 
@@ -60,8 +60,14 @@ class VoteListContainer extends Component {
     this.setState({ openModal: false });
   }
 
-  handleVote = () => {
-    
+  handleVote = (id, option) => {
+    console.log(id, option);
+    this.props.voteForPoll(id, option)
+    .then(res => {
+      if (res.success){
+        console.log('success');
+      }
+    })
   }
 
   goToResults = () => {
@@ -108,6 +114,7 @@ class VoteListContainer extends Component {
                 goToResults={this.goToResults}
                 handleVote={this.handleVote}
                 loggedIn={user.loggedIn}
+                loading={user.loading}
               />
             }
           </Grid.Column>
@@ -124,4 +131,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchAllPolls, sortMyPolls })(VoteListContainer);
+export default connect(mapStateToProps, { fetchAllPolls, sortMyPolls, voteForPoll })(VoteListContainer);

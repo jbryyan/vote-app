@@ -11,17 +11,28 @@ module.exports = function(req, res){
       Poll.find({}, function(err, doc){
         if(err) throw err;
         console.log(doc)
-        
-        res.status(200).json({ myPolls: doc[0].polls });
+        console.log(decoded.username);
+        let newArr = doc.map(function(item){
+          let newObj = item.toObject();
+          if(newObj.voters.indexOf(decoded.username) > -1){
+            console.log('User already exists');
+            newObj.voted = true;
+          };
+
+          delete newObj.voters;
+          return newObj;
+        });
+        console.log(newArr);
+        res.status(200).json({ myPolls: newArr });
       })
 
     });
   }else{
      // Grab polls from user and send
-    Poll.find({}, function(err, doc){
+    Poll.find({}, { voters: 0 }, function(err, doc){
       if(err) throw err;
       console.log(doc)
-      res.status(200).json({ myPolls: doc[0].polls });
+      res.status(200).json({ myPolls: doc });
     })
   }
 

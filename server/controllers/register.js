@@ -13,7 +13,6 @@ module.exports = function(req, res){
     let newUser = new User({
       username: req.body.username,
       password: req.body.password,
-      location: req.body.location
     });
     console.log(newUser);
     // Attempt to save new user
@@ -23,8 +22,8 @@ module.exports = function(req, res){
         else if (err) return res.status(401).json({ success: false, message: err.errors.username.message });
         else{ //res.json({ success: true, message: 'Successfuly created new user.' });
           //jwt.sign(JSON.parse(JSON.stringify(newUser)), process.env.SECRET, { expiresIn: '1h' },
-          let newPoll = new Poll({ username: req.body.username });
-          newPoll.save();
+          //let newPoll = new Poll({ username: req.body.username });
+          //newPoll.save();
 
 
           jwt.sign({ username: req.body.username }, config.secret, { expiresIn: '1h' },
