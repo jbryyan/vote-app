@@ -3,11 +3,13 @@ import logo from '../styles/logo.svg';
 import '../styles/App.css';
 import { Segment, List, Label, Image, Responsive, Transition, Icon } from 'semantic-ui-react';
 import '../styles/VoteList.css';
+import Loading from './Loading';
 
 class VoteList extends Component {
   state = { animation: 'fade up', duration: 500, visible: false }
   
   componentDidMount() {
+    console.log('component did mount');
     setTimeout( () => {
       this.setState({ visible: true });
     }, 100);
@@ -17,7 +19,7 @@ class VoteList extends Component {
   listClicked = (data, owner) => {
       if(owner || data.voted ){
         this.props.history.push({
-          pathname: `/poll/${data.id}`,
+          pathname: `/poll/${data._id}`,
           state: { data: data }
         });
       }else{
@@ -77,8 +79,11 @@ class VoteList extends Component {
   }
 
   render() {
-    const { data, sortedData } = this.props;
+    const { data, sortedData, loading } = this.props;
     const { visible } = this.state;
+
+    if(loading) return <Loading />;
+
     return (
       <Transition.Group animation={this.state.animation} duration={this.state.duration}>
       { visible && 

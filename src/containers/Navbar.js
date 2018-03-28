@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Container, Dropdown, Button, Menu, Icon } from 'semantic-ui-react';
+import { Container, Dropdown, Button, Menu, Icon, Responsive } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Signin from '../components/Signin';
 import NewVote from '../components/NewVote';
+import { logout } from '../actions/index';
+import { 
+  register, login, authToken, 
+  addNewPoll, fetchAllPolls 
+} from '../thunks/_index';
 
-import { register, login, authtoken, addNewPoll } from '../actions/index';
 import  { SubmissionError } from 'redux-form';
 
 class Navbar extends Component {
@@ -18,7 +22,7 @@ class Navbar extends Component {
 
   componentWillMount(){
     if(localStorage.getItem('pinCloneToken')){
-      this.props.authtoken(localStorage.getItem('pinCloneToken'));
+      this.props.authToken(localStorage.getItem('pinCloneToken'));
     }
   }
 
@@ -46,6 +50,7 @@ class Navbar extends Component {
           this.setState({ loading: false });
           if(res.success){
             this.setState({ openSignin: false });
+            this.props.fetchAllPolls();
           }else{
             console.log(res.message);
             throw (new SubmissionError(res.message))
@@ -57,6 +62,7 @@ class Navbar extends Component {
           this.setState({ loading: false });
           if(res.success){
             this.setState({ openSignin: false });
+            this.props.fetchAllPolls();
           }else{
             console.log(res.message);
             throw (new SubmissionError(res.message))
@@ -76,36 +82,49 @@ class Navbar extends Component {
     })
   }
 
+  logout = () => {
+    this.props.logout();
+    this.props.fetchAllPolls();
+  }
+
   render() {
     const activeItem = this.props.location.pathname;
     const { openSignin, loading, openNewVote } = this.state;
     const { user } = this.props;
     return (
       <div className="navbar-root">
-        <Menu borderless inverted pointing size='massive' fixed='top'>
+        <Menu borderless inverted pointing fixed='top'>
           <Container>
             <Menu.Item as={Link} to='/' 
               name='home'
               active={activeItem === '/'}
               onClick={this.handleItemClick}
             >
-              <Icon name='twitter'/>
+              <Icon name='home'/>
             </Menu.Item>
-            <Menu.Item as={Link} to='/about' position='right' 
+            
+            <Menu.Menu position='right'>
+            
+            <Menu.Item as={Link} to='/about'
               name='about'
               active={activeItem === '/about'}
               onClick={this.handleItemClick}
             >
               About
             </Menu.Item>
+           
             <Menu.Item as={Link} to='/list' 
               name='list'
               active={activeItem === '/list'}
-              onClick={this.handleItemClick}  
+              onClick={this.handleItemClick} 
+              
             >
               Poll List
             </Menu.Item>
+            </Menu.Menu>
+            
             { user.loggedIn ? 
+              
               <Dropdown text='Welcome' pointing className='link item' 
                 name='welcome' 
                 active={activeItem === 'welcome'}
@@ -116,12 +135,13 @@ class Navbar extends Component {
                   <Dropdown.Item onClick={this.openNewVote}>Create New </Dropdown.Item>
                   <Dropdown.Item as={Link} to='/mypolls'>View My Polls</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item>Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+              
               :
               <Menu.Item onClick={this.openSignin}>
-                Sign in
+                <Icon name='sign in'/>
               </Menu.Item>
             }
           </Container>
@@ -156,7 +176,9 @@ const mapStateToProps = (state) => {
 
 // Map redux actions to component props
 const mapDispatchToProps = {
-  register, login, authtoken, addNewPoll
+  register, login, 
+  authToken, addNewPoll,
+  logout, fetchAllPolls
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

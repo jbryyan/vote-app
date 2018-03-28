@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import VoteList from '../components/VoteList';
 import VoteListForm from '../components/VoteListForm';
 import VoteListModal from '../components/VoteListModal';
-import { fetchAllPolls, sortMyPolls, voteForPoll } from '../actions/index';
+import { fetchAllPolls, sortMyPolls, voteForPoll } from '../thunks/_index';
 
 import '../styles/VoteListContainer.css';
 
@@ -65,15 +65,18 @@ class VoteListContainer extends Component {
     this.props.voteForPoll(id, option)
     .then(res => {
       if (res.success){
-        console.log('success');
+        this.goToResults();
       }
+    })
+    .catch(err => {
+      this.setState({ openModal: false });
     })
   }
 
   goToResults = () => {
-    console.log(this.state.modalData);
+    console.log('modal data', this.state.modalData);
     this.props.history.push({
-      pathname: `/poll/${this.state.modalData.id}`,
+      pathname: `/poll/${this.state.modalData._id}`,
       state: { data: this.state.modalData }
     });
   }
@@ -105,6 +108,7 @@ class VoteListContainer extends Component {
               openModal={this.openModal}
               user={user.username}
               history={this.props.history}
+              loading={polls.loading}
             />
             { openModal && 
               <VoteListModal 

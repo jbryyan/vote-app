@@ -41,7 +41,7 @@ class VoteListModal extends Component {
         <Modal.Content image>
           <Modal.Description>
             <Header>{this.props.data.text}</Header>
-            {!loggedIn && <Label basic color='red'>Please log in</Label> }
+            {!loggedIn && <Label basic color='red'>Please sign in to vote.</Label> }
             <Form onSubmit={this.handleVote} id='form1'>
               <Form.Field>
                 

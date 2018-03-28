@@ -6,7 +6,10 @@ import VoteListForm from '../components/VoteListForm';
 import MyPollModal from '../components/MyPollModal';
 import NewVote from '../components/NewVote';
 
-import { fetchMyPolls, sortMyPolls, deleteMyPoll, addNewPoll } from '../actions/index';
+import { 
+  fetchMyPolls, sortMyPolls, 
+  deleteMyPoll, addNewPoll 
+} from '../thunks/_index';
 
 import '../styles/VoteListContainer.css';
 
@@ -17,7 +20,11 @@ class MyPolls extends Component {
   }
 
   componentWillMount = () => {
-    this.props.fetchMyPolls();
+    if(!this.props.user.loggedIn){
+      this.props.history.push('/list');
+    }else{
+      this.props.fetchMyPolls();
+    }
   }
 
   handleChange = (e, { name, value }) => {

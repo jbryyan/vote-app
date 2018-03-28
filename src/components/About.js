@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { Grid, Button, Image, Segment, Icon, List, Container, Transition } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import '../styles/About.css';
+import reactImage from '../data/react.png';
 
 class About extends Component {
-  state = { animation: 'fade up', duration: 800, visibleProject: false, visibleAuthor: false }
+  state = { animation: 'fade up', duration: 500, visibleProject: false, visibleAuthor: false }
   
   componentDidMount() {
     setTimeout( () => {
       this.setState({ visibleProject: true });
-    }, 300);
-    setTimeout( () => {
       this.setState({ visibleAuthor: true });
-    }, 800);
+    }, 100);
+    
   }
 
   renderProjectInfo = () => {
@@ -21,7 +21,7 @@ class About extends Component {
       { this.state.visibleProject && 
         <Container textAlign='center'>
           <h1>Project</h1>
-          <Image src='https://i.imgur.com/xfxebKY.png' size='small' centered circular/>
+          <Image src={reactImage} size='small' centered circular/>
           <List textAlign='center' divided size='huge'>
             <List.Item>
               This is a freeCodeCamp full-stack project. <br/>
@@ -32,16 +32,31 @@ class About extends Component {
             <List.Item>
               Built with:<br/>
               <List bulleted horizontal size='large'>
-                <List.Item><Icon name='react'/>React</List.Item>
-                <List.Item><Icon name='react'/>Redux</List.Item>
-                <List.Item><Icon name='react'/>Node</List.Item>
+                <List.Item style={{color: 'teal'}}>
+                  <Icon name='react' color='teal'/>
+                  React
+                </List.Item>
+                <List.Item style={{color: 'purple'}}>
+                  <Icon name='node js' color='purple'/>
+                  Redux
+                </List.Item>
+                <List.Item style={{color: 'green'}}>
+                  <Icon name='node js' color='green'/>
+                  Node
+                </List.Item>
               </List> 
             </List.Item>
             <List.Item>
               Other key frameworks/packages include:<br/>
               <List bulleted horizontal size='large'>
-                <List.Item><Icon name='react'/>React Router (v4)</List.Item>
-                <List.Item><Icon name='react'/>React Semantic UI</List.Item>
+                <List.Item style={{color: 'teal'}}>
+                  <Icon name='react' color='teal'/>
+                  React Router (v4)
+                </List.Item>
+                <List.Item style={{color: 'teal'}}>
+                  <Icon name='react' color='teal'/>
+                  React Semantic UI
+                </List.Item>
               </List> 
             </List.Item>
           </List>
@@ -58,7 +73,6 @@ class About extends Component {
         { this.state.visibleAuthor && 
           <Container textAlign='center'>
             <h1>Author</h1>
-            <Image src='https://i.imgur.com/xfxebKY.png' size='small' centered circular/>
             <List textAlign='center' size='large'>
               <List.Item size='huge'>
                 <h1>Bryan Juarez</h1>
@@ -66,12 +80,12 @@ class About extends Component {
               <List.Item>
                 <List bulleted horizontal>
                   <List.Item><Icon size='large' name='github'/></List.Item>
-                  <List.Item><Icon size='large' name='linkedin'/></List.Item>
-                  <List.Item><Icon size='large' name='free code camp'/></List.Item>
+                  <List.Item><Icon size='large' name='linkedin' color='blue'/></List.Item>
+                  <List.Item><Icon size='large' name='free code camp' color='green'/></List.Item>
                 </List> 
               </List.Item>
               <List.Item>
-                <Icon name='marker'/>Los Angeles, CA
+                <Icon name='marker' color='red'/>Los Angeles, CA
               </List.Item>
             </List>
           </Container>
@@ -87,11 +101,11 @@ class About extends Component {
       <Grid className='about-root' divided 
         padded stackable>
         
-        <Grid.Row stretched>
+        <Grid.Row>
           <Grid.Column width={8}>
             {this.renderProjectInfo()}
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={8} only='computer tablet'>
             {this.renderAuthorInfo()}
           </Grid.Column>
         </Grid.Row>

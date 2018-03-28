@@ -1,6 +1,6 @@
 import { 
   FETCH_POLLS, FETCH_MY_POLLS, LOAD_POLLS, LOAD_MYSORTED_POLLS,
-  IS_LOADING
+  IS_LOADING, LOAD_POLL
 } from '../actions/action-types';
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
   sortedPolls: [],
   myPolls: [],
   mySortedPolls: [],
+  poll: {},
   loading: false
 };
 
@@ -17,6 +18,8 @@ export default function(state = initialState, action) {
       return { ...initialState, myPolls: action.payload }
     case LOAD_MYSORTED_POLLS:
       return { ...state, mySortedPolls: action.payload }
+    case LOAD_POLL:
+      return {...state, poll: action.payload };
     case FETCH_POLLS:
       return state;
     case FETCH_MY_POLLS:

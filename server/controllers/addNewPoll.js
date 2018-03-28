@@ -39,7 +39,8 @@ module.exports = function(req, res){
     text: pollData.question,
     options: [],
     madeBy: username, 
-    date: `${month}/${day}/${year}`,
+    //date: `${month}/${day}/${year}`,
+    date: `${month}/${day}/2019`,
     //voters: []
   };
   

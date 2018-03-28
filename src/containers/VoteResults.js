@@ -1,20 +1,37 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Grid, Button, Header, Segment } from 'semantic-ui-react';
+import { fetchPoll } from '../thunks/_index';
 import Chart from 'chart.js';
+import { connect } from 'react-redux';
 import 'chart.piecelabel.js'
 import '../styles/VoteResults.css';
 
 class VoteResults extends Component {
 
+  componentWillMount(){
+    this.props.fetchPoll(this.props.location.pathname)
+    .then(res => {
+      if(res.success) {
+        this.renderChart();
+      }
+    })
 
+  }
+  
+  /*
   componentDidMount() {
     if(this.props.location.state ){
       this.renderChart();
     }
-    
+    this.props.fetchPoll(this.props.location.pathname)
+      .then(res => {
+        if(res.success) {
+          this.renderChart();
+        }
+      })
   }
-
+  */
   renderChart = () => {
     function getRandomColor() {
       var letters = '6789ABCDEF'.split('');
@@ -29,8 +46,8 @@ class VoteResults extends Component {
     ctx.canvas.width= 300;
     ctx.canvas.height= 100;
 
-    const options = this.props.location.state.data.options;
-
+    //const options = this.props.location.state.data.options;
+    const options = this.props.polls.poll.options;
     let backgroundColor = [];
 
     const data = options.map( obj => {
@@ -68,12 +85,17 @@ class VoteResults extends Component {
   }
 
   render() {
+    /*
     const data = this.props.location.state ?
-      this.props.location.state.data : null
+      this.props.location.state.data : this.props.poll
       ;
+    */
+    const data = this.props.polls.poll;
+
     if (!data){ 
       return <div></div>
     } 
+  
     return (
       <Grid  padded>
         <Grid.Row>
@@ -99,4 +121,12 @@ class VoteResults extends Component {
   }
 }
 
-export default VoteResults;
+
+const mapStateToProps = (state) => {
+  return {
+    polls: state.polls
+  };
+};
+
+
+export default connect(mapStateToProps, { fetchPoll })(VoteResults);

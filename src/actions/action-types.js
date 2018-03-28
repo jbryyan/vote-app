@@ -14,4 +14,5 @@ export const LOADING_USER = 'loading_user';
 export const LOAD_MYSORTED_POLLS = 'load_mysorted_polls'; 
 export const LOAD_POLLS = 'load_polls';
 export const IS_LOADING = 'is_loading';
+export const LOAD_POLL = 'load_poll';
 export const ROOT_URL = 'http://192.168.223.128:9000';

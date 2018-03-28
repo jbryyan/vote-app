@@ -28,6 +28,7 @@ module.exports = function(req, res){
 
     });
   }else{
+    console.log(req.connection.remoteAddress);
      // Grab polls from user and send
     Poll.find({}, { voters: 0 }, function(err, doc){
       if(err) throw err;
