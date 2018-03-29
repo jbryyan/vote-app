@@ -15,4 +15,4 @@ export const LOAD_MYSORTED_POLLS = 'load_mysorted_polls';
 export const LOAD_POLLS = 'load_polls';
 export const IS_LOADING = 'is_loading';
 export const LOAD_POLL = 'load_poll';
-export const ROOT_URL = 'https://redux-vote.glitch.me/';
+export const ROOT_URL = 'https://redux-vote.glitch.me';
