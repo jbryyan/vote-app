@@ -3,9 +3,11 @@ import { is_loading, my_polls } from '../actions/index';
 import { ROOT_URL } from '../actions/action-types';
 
 const fetchAllPolls = () => dispatch => {
+  dispatch(is_loading(true));
   Request.get(`${ROOT_URL}/api/fetchAllPolls`)
     .set('Authorization', localStorage.getItem('pinCloneToken'))
     .then(res => {
+      dispatch(is_loading(false));
       if(res.status === 200){
         //Update state
         console.log(res.body);
