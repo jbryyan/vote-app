@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import VoteListContainer from './containers/VoteListContainer';
 import VoteResults from './containers/VoteResults';
 import MyPolls from './containers/MyPolls';
+import Page404 from './components/Page404';
 
 import './styles/App.css';
 
@@ -22,8 +23,8 @@ class App extends Component {
             <Route path='/about' component={About} />
             <Route path='/list' component={VoteListContainer} />
             <Route path='/mypolls' component={MyPolls} />
-            <Route path='/poll/:modalData' 
-              render={(props) => <VoteResults {...props} />} />
+            <Route path='/poll/:modalData' component={VoteResults} />
+            <Route component={Page404} />
           </Switch>
           <Footer />
         </div>      

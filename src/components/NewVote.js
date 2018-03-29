@@ -84,6 +84,7 @@ class NewVote extends Component {
                 )
               })
             }
+            { error && <strong>{error}</strong>}
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -102,23 +103,7 @@ class NewVote extends Component {
   }
 }
 
-// Validates redux form.
-const validate = (values) => {
-  const errors = {};
-
-  //Validate the inputs
-  if (!values.username || values.username.length < 3){
-    errors.username = 'Enter a username that is at least 3 characters';
-  }
-  if (!values.password || values.password.length < 3){
-    errors.password = 'Enter a password that is at least 3 characters.';
-  }
-
-  return errors;
-};
-
 export default reduxForm({
-  validate,
   form: 'NewVoteForm'
 })(NewVote);
 
